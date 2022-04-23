@@ -85,6 +85,10 @@ def CutFile():
             logger.info(f"file_number={int(chunk_count) + 1}")
             logger.debug(f"Output FileName is {save_path}")
 
+def get_time():
+    now = time.strftime("%Y-%m-%d", time.localtime())
+    return now           
+            
 def Split_Audio_Algo():
     CutFile()
     logger.warning("Run Over")
@@ -93,7 +97,9 @@ def Split_Audio_Algo():
 if __name__ == "__main__":
     input_path = "./input"                  # 输入原始音频路径
     output_path = "./output"                # 分割以后需要保存的音频路径
-    logger.add("log_{time}.log", rotation="500 MB", retention="7 days")   # 将所有的记录全都写入日志文件中查看
+    log_file = 'log/' + get_time()
+    create_dir(log_file)
+    logger.add(log_file + f"/log_{get_time()}.log", rotation="500 MB", retention="7 days")   # 将所有的记录全都写入日志文件中查看
     """
     log_{ time }.log 表示按照执行代码的时间生成日志文件
     rotation  表示文件过大就会重新生成一个文件;
